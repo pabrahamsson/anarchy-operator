@@ -85,6 +85,7 @@ Define the anarchy FQDN
 */}}
 {{- define "anarchy.hostname" -}}
 {{- if .Values.openshift.enabled -}}
-{{- default (printf "%s.%s" (include "anarchy.name" .) (regexReplaceAll "console." (lookup "route.openshift.io/v1" "Route" "openshift-console" "console").spec.host "${1}")) .Values.openshift.route.host -}}
+{{- /* default (printf "%s.%s" (include "anarchy.name" .) (regexReplaceAll "console." (lookup "route.openshift.io/v1" "Route" "openshift-console" "console").spec.host "${1}")) .Values.openshift.route.host */ -}}
+{{- default (printf "%s.%s" (include "anarchy.name" .) (regexReplaceAll "^[^.]*." (lookup "route.openshift.io/v1" "Route" "openshift-console" "console").spec.host "${1}")) .Values.openshift.route.host -}}
 {{- end -}}
 {{- end -}}
